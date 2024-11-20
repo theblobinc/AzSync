@@ -73,7 +73,7 @@ Once installed and configured, AzSync will automatically handle the synchronizat
 
 ### HTTP Endpoints
 
-AzSync sets up several HTTP endpoints to handle requests from the Azuriom API. Below is the detailed documentation for each endpoint:
+AzSync sets up several HTTP endpoints to handle requests from the Azuriom CMS. Below is the detailed documentation for each endpoint:
 
 ---
 
