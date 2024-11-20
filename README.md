@@ -14,7 +14,7 @@
 
 ## Requirements
 
-- **Rust Server**: Running with Oxide mod support.
+- **Rust Server**: Running with Carbon or Oxide mod support.
 - **Oxide Plugins**:
   - [Economics](https://umod.org/plugins/economics) plugin installed.
 - **Azuriom Website**: Properly set up and configured to interact with the plugin.
