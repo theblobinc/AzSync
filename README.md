@@ -92,8 +92,8 @@ Azuriom-Link-Token
 **Request Body:**
 ```json
 {
-  "game_id": "string",    // Player's SteamID
-  "balance": number       // New balance amount
+  "game_id": "string",    Player's SteamID
+  "balance": number       New balance amount
 }
 ```
 
@@ -229,7 +229,7 @@ Azuriom-Link-Token
 **Request Body:**
 ```json
 {
-  "game_id": "string"    // Player's SteamID
+  "game_id": "string"    Player's SteamID
 }
 ```
 
@@ -342,8 +342,8 @@ Azuriom-Link-Token
 **Request Body:**
 ```json
 {
-  "steam_id": "string",   // Player's SteamID
-  "balance": number       // (Optional) Initial balance
+  "steam_id": "string",    Player's SteamID
+  "balance": number       (Optional) Initial balance
 }
 ```
 
@@ -402,8 +402,8 @@ Azuriom-Link-Token
 **Request Body:**
 ```json
 {
-  "steam_id": "string",    // Player's SteamID
-  "amount": number         // Amount to add
+  "steam_id": "string",    Player's SteamID
+  "amount": number         Amount to add
 }
 ```
 
@@ -462,8 +462,8 @@ Azuriom-Link-Token
 **Request Body:**
 ```json
 {
-  "steam_id": "string",    // Player's SteamID
-  "amount": number         // Amount to subtract
+  "steam_id": "string",    Player's SteamID
+  "amount": number         Amount to subtract
 }
 ```
 
