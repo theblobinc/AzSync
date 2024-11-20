@@ -5,9 +5,9 @@
 ## Features
 
 - **Asynchronous Data Synchronization**: Ensures real-time synchronization of economic and user data between Rust and Azuriom.
-- **HTTP Listener**: Handles incoming HTTP requests from the Azuriom API for balance updates and user management.
+- **HTTP Listener**: Handles incoming HTTP requests from the Azuriom CMS for balance updates and user management.
 - **SQLite Integration**: Utilizes SQLite for storing transaction records, user balances, and account information.
-- **Economics Plugin Integration**: Seamlessly works with the Economics plugin to manage in-game currency.
+- **Economics Plugin Integration**: Seamlessly works with the MIT Licensed Economics plugin to manage in-game currency.
 - **Transaction Ledger**: Maintains a comprehensive ledger of all transactions for auditing and tracking purposes.
 - **Consistency Verification**: Periodically checks and ensures consistency between in-game balances and website data.
 - **User Management**: Automatically registers users on the Azuriom website upon connecting to the server.
