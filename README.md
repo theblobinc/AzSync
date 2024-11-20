@@ -18,8 +18,6 @@
 - **Oxide Plugins**:
   - [Economics](https://umod.org/plugins/economics) plugin installed.
 - **Azuriom Website**: Properly set up and configured to interact with the plugin.
-- **.NET Framework**: Ensure that your server environment supports .NET for running C# plugins.
-
 ## Installation
 
 1. **Download AzSync Plugin**:
