@@ -77,55 +77,490 @@ Once installed and configured, AzSync will automatically handle the synchronizat
 
 ### HTTP Endpoints
 
-AzSync sets up several HTTP endpoints to handle requests from the Azuriom API:
+AzSync sets up several HTTP endpoints to handle requests from the Azuriom API. Below is the detailed documentation for each endpoint:
 
+---
+
+#### **POST /azsync/set-balance**
+
+**Description:**  
+Sets a player's balance to a specific value.
+
+**Request Headers:**
 - 
 
-POST /azsync/set-balance
+Azuriom-Link-Token
 
-: Sets a player's balance.
+ (string, required): API token for authentication.
+
+**Request Body:**
+```json
+{
+  "game_id": "string",    // Player's SteamID
+  "balance": number       // New balance amount
+}
+```
+
+**Response:**
+- **Success (200 OK):**
+  ```json
+  {
+    "status": "Balance update initiated successfully."
+  }
+  ```
+- **Error (400 Bad Request):**
+  ```json
+  {
+    "error": "Missing or empty 'game_id' in balance data."
+  }
+  ```
+- **Error (401 Unauthorized):**
+  ```json
+  {
+    "error": "Unauthorized access"
+  }
+  ```
+- **Error (500 Internal Server Error):**
+  ```json
+  {
+    "error": "Internal server error"
+  }
+  ```
+
+---
+
+#### **GET /azsync/get-balance**
+
+**Description:**  
+Retrieves a player's current balance.
+
+**Request Headers:**
 - 
 
-GET /azsync/get-balance
+Azuriom-Link-Token
 
-: Retrieves a player's balance.
+ (string, required): API token for authentication.
+
+**Query Parameters:**
+- `game_id` (string, required): Player's SteamID.
+
+**Example Request:**
+```
+GET /azsync/get-balance?game_id=76561198000000000
+```
+
+**Response:**
+- **Success (200 OK):**
+  ```json
+  {
+    "steam_id": "76561198000000000",
+    "balance": 1500.75
+  }
+  ```
+- **Error (400 Bad Request):**
+  ```json
+  {
+    "error": "Missing or empty 'game_id' in query parameters."
+  }
+  ```
+- **Error (401 Unauthorized):**
+  ```json
+  {
+    "error": "Unauthorized access"
+  }
+  ```
+- **Error (404 Not Found):**
+  ```json
+  {
+    "error": "User not found"
+  }
+  ```
+- **Error (500 Internal Server Error):**
+  ```json
+  {
+    "error": "Internal server error"
+  }
+  ```
+
+---
+
+#### **GET /azsync/user-check**
+
+**Description:**  
+Checks for missing users and registers them on the Azuriom website.
+
+**Request Headers:**
 - 
 
-GET /azsync/user-check
+Azuriom-Link-Token
 
-: Checks for missing users and registers them.
+ (string, required): API token for authentication.
+
+**Response:**
+- **Success (200 OK):**
+  ```json
+  {
+    "status": "User check processed."
+  }
+  ```
+- **Error (401 Unauthorized):**
+  ```json
+  {
+    "error": "Unauthorized access"
+  }
+  ```
+- **Error (500 Internal Server Error):**
+  ```json
+  {
+    "error": "Internal server error"
+  }
+  ```
+
+---
+
+#### **POST /azsync/reset-balance**
+
+**Description:**  
+Resets a player's balance to zero.
+
+**Request Headers:**
 - 
 
-POST /azsync/reset-balance
+Azuriom-Link-Token
 
-: Resets a player's balance to zero.
+ (string, required): API token for authentication.
+
+**Request Body:**
+```json
+{
+  "game_id": "string"    // Player's SteamID
+}
+```
+
+**Response:**
+- **Success (200 OK):**
+  ```json
+  {
+    "status": "Balance reset successfully."
+  }
+  ```
+- **Error (400 Bad Request):**
+  ```json
+  {
+    "error": "Missing or empty 'game_id' in request body."
+  }
+  ```
+- **Error (401 Unauthorized):**
+  ```json
+  {
+    "error": "Unauthorized access"
+  }
+  ```
+- **Error (500 Internal Server Error):**
+  ```json
+  {
+    "error": "Internal server error"
+  }
+  ```
+
+---
+
+#### **GET /azsync/get-transactions**
+
+**Description:**  
+Retrieves transaction records with optional filters.
+
+**Request Headers:**
 - 
 
-GET /azsync/get-transactions
+Azuriom-Link-Token
 
-: Retrieves transaction records.
+ (string, required): API token for authentication.
+
+**Query Parameters:**
+- `start_time` (string, optional): Start of the time range in ISO 8601 format.
+- `end_time` (string, optional): End of the time range in ISO 8601 format.
 - 
 
-POST /azsync/add-user
+limit
 
-: Adds a new user.
+ (integer, optional): Number of records to retrieve (default: 100, max: 1000).
 - 
 
-POST /azsync/add-balance
+offset
 
-: Adds balance to a user's account.
+ (integer, optional): Number of records to skip (default: 0).
+
+**Example Request:**
+```
+GET /azsync/get-transactions?start_time=2023-01-01T00:00:00Z&end_time=2023-12-31T23:59:59Z&limit=50&offset=100
+```
+
+**Response:**
+- **Success (200 OK):**
+  ```json
+  [
+    {
+      "timestamp": "2023-04-25T14:30:00Z",
+      "transaction_type": "deposit",
+      "steam_id": "76561198000000000",
+      "target_steam_id": "",
+      "amount": 500.0
+    },
+    // More transactions...
+  ]
+  ```
+- **Error (400 Bad Request):**
+  ```json
+  {
+    "error": "Invalid 'start_time' format. Use ISO 8601 format."
+  }
+  ```
+- **Error (401 Unauthorized):**
+  ```json
+  {
+    "error": "Unauthorized access"
+  }
+  ```
+- **Error (500 Internal Server Error):**
+  ```json
+  {
+    "error": "Internal server error"
+  }
+  ```
+
+---
+
+#### **POST /azsync/add-user**
+
+**Description:**  
+Adds a new user to the system.
+
+**Request Headers:**
 - 
 
-POST /azsync/subtract-balance
+Azuriom-Link-Token
 
-: Subtracts balance from a user's account.
+ (string, required): API token for authentication.
+
+**Request Body:**
+```json
+{
+  "steam_id": "string",   // Player's SteamID
+  "balance": number       // (Optional) Initial balance
+}
+```
+
+**Response:**
+- **Success (200 OK):**
+  ```json
+  {
+    "status": "User added successfully."
+  }
+  ```
+- **Error (400 Bad Request):**
+  ```json
+  {
+    "error": "Missing 'steam_id' in request body."
+  }
+  ```
+- **Error (400 Bad Request):**
+  ```json
+  {
+    "error": "Invalid 'balance' value. Must be a number."
+  }
+  ```
+- **Error (409 Conflict):**
+  ```json
+  {
+    "error": "User already exists."
+  }
+  ```
+- **Error (401 Unauthorized):**
+  ```json
+  {
+    "error": "Unauthorized access"
+  }
+  ```
+- **Error (500 Internal Server Error):**
+  ```json
+  {
+    "error": "Internal server error"
+  }
+  ```
+
+---
+
+#### **POST /azsync/add-balance**
+
+**Description:**  
+Adds a specified amount to a user's account balance.
+
+**Request Headers:**
 - 
 
-GET /azsync/get-all-balances
+Azuriom-Link-Token
 
-: Retrieves all user balances.
+ (string, required): API token for authentication.
 
-Ensure that your Azuriom website is configured to communicate with these endpoints using the correct API token.
+**Request Body:**
+```json
+{
+  "steam_id": "string",    // Player's SteamID
+  "amount": number         // Amount to add
+}
+```
+
+**Response:**
+- **Success (200 OK):**
+  ```json
+  {
+    "status": "Balance added successfully."
+  }
+  ```
+- **Error (400 Bad Request):**
+  ```json
+  {
+    "error": "Missing 'steam_id' or 'amount' in request body."
+  }
+  ```
+- **Error (400 Bad Request):**
+  ```json
+  {
+    "error": "Invalid 'amount' value. Must be a positive number."
+  }
+  ```
+- **Error (404 Not Found):**
+  ```json
+  {
+    "error": "User does not exist."
+  }
+  ```
+- **Error (401 Unauthorized):**
+  ```json
+  {
+    "error": "Unauthorized access"
+  }
+  ```
+- **Error (500 Internal Server Error):**
+  ```json
+  {
+    "error": "Internal server error"
+  }
+  ```
+
+---
+
+#### **POST /azsync/subtract-balance**
+
+**Description:**  
+Subtracts a specified amount from a user's account balance.
+
+**Request Headers:**
+- 
+
+Azuriom-Link-Token
+
+ (string, required): API token for authentication.
+
+**Request Body:**
+```json
+{
+  "steam_id": "string",    // Player's SteamID
+  "amount": number         // Amount to subtract
+}
+```
+
+**Response:**
+- **Success (200 OK):**
+  ```json
+  {
+    "status": "Balance subtracted successfully."
+  }
+  ```
+- **Error (400 Bad Request):**
+  ```json
+  {
+    "error": "Missing 'steam_id' or 'amount' in request body."
+  }
+  ```
+- **Error (400 Bad Request):**
+  ```json
+  {
+    "error": "Invalid 'amount' value. Must be a positive number."
+  }
+  ```
+- **Error (404 Not Found):**
+  ```json
+  {
+    "error": "User does not exist."
+  }
+  ```
+- **Error (400 Bad Request):**
+  ```json
+  {
+    "error": "Insufficient balance."
+  }
+  ```
+- **Error (401 Unauthorized):**
+  ```json
+  {
+    "error": "Unauthorized access"
+  }
+  ```
+- **Error (500 Internal Server Error):**
+  ```json
+  {
+    "error": "Internal server error"
+  }
+  ```
+
+---
+
+#### **GET /azsync/get-all-balances**
+
+**Description:**  
+Retrieves the balances of all users.
+
+**Request Headers:**
+- 
+
+Azuriom-Link-Token
+
+ (string, required): API token for authentication.
+
+**Response:**
+- **Success (200 OK):**
+  ```json
+  {
+    "balances": {
+      "76561198000000000": 1500.75,
+      "76561198000000001": 2500.00,
+      // More users...
+    }
+  }
+  ```
+- **Error (401 Unauthorized):**
+  ```json
+  {
+    "error": "Unauthorized access"
+  }
+  ```
+- **Error (500 Internal Server Error):**
+  ```json
+  {
+    "error": "Internal server error"
+  }
+  ```
+
+---
+
+**Note:**  
+Ensure that your Azuriom website is configured to communicate with these endpoints using the correct API token (
+
+Azuriom-Link-Token
+
+). All requests must include this token in the headers for authentication purposes.
 
 ## Contribution
 
