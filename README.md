@@ -588,4 +588,4 @@ This project is licensed under the MIT License.
 
 ---
 
-*Developed by [theblobinc](https://github.com/theblobinc)*
+*Developed by [theblobinc](https://github.com/theblobinc) [ChatGPT](https://chatgpt.com/)*
