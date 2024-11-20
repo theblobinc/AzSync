@@ -23,11 +23,7 @@
 ## Installation
 
 1. **Download AzSync Plugin**:
-   - Clone the repository or download the 
-
-AzSync.cs
-
- file directly.
+   - Clone the repository or download the AzSync.cs file directly.
    
    ```bash
    git clone https://github.com/theblobinc/AzSync.git
